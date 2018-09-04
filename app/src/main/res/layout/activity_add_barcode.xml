@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddBarcode">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <EditText
+            android:id="@+id/scannedBarcode"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:hint="Barcode Number "
+            android:inputType="textPersonName"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_below="@+id/scannedBarcode"
+            android:layout_centerHorizontal="true"
+            android:text="Scan an item to proceed"
+            android:textAlignment="center"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="100dp">
+
+        <LinearLayout
+            android:id="@+id/hiddenLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".4"
+                        android:text="ITEM NAME" />
+
+                    <EditText
+                        android:id="@+id/itemName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_weight=".6"
+                        android:ems="10"
+                        android:hint="Item Name "
+                        android:inputType="textPersonName" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_alignStart="@+id/itemName"
+                        android:layout_alignLeft="@+id/itemName"
+                        android:layout_below="@+id/itemName"
+                        android:layout_weight=".4"
+                        android:gravity="center_vertical"
+                        android:text="PRICE"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/itemPrice"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/itemName"
+                        android:layout_toStartOf="@+id/packetPrice"
+                        android:layout_toLeftOf="@+id/packetPrice"
+                        android:layout_weight=".6"
+                        android:ems="10"
+                        android:gravity="right"
+                        android:hint="Price "
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textPrice2"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_alignStart="@+id/itemName"
+                        android:layout_alignLeft="@+id/itemName"
+                        android:layout_below="@+id/itemName"
+                        android:layout_weight=".4"
+                        android:gravity="center_vertical"
+                        android:text="PRICE2"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/itemPrice2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/itemName"
+                        android:layout_toStartOf="@+id/packetPrice"
+                        android:layout_toLeftOf="@+id/packetPrice"
+                        android:layout_weight=".6"
+                        android:ems="10"
+                        android:gravity="right"
+                        android:hint="Price2 "
+                        android:inputType="numberDecimal" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textStock"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignStart="@+id/itemName"
+                        android:layout_below="@+id/packetPrice"
+                        android:layout_alignLeft="@+id/itemName"
+                        android:layout_weight=".4"
+                        android:gravity="center_vertical"
+                        android:text="STOCK"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".6"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:text="Current"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/existingStock"
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_alignStart="@+id/itemPrice"
+                                android:layout_alignLeft="@+id/itemPrice"
+                                android:layout_below="@+id/packetPrice"
+                                android:layout_weight=".5"
+                                android:gravity="right|center_vertical"
+                                android:paddingRight="5dp"
+                                android:text="Stock"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ToggleButton
+                                android:id="@+id/addSubToggle"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:background="@android:color/background_light"
+                                android:text="ToggleButton"
+                                android:textAlignment="textEnd"
+                                android:layout_gravity="end"
+                                android:textOff="Add +"
+                                android:textOn="Subtract -" />
+
+                            <EditText
+                                android:id="@+id/itemStock"
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/packetPrice"
+                                android:layout_toLeftOf="@+id/packetPrice"
+                                android:layout_weight=".5"
+                                android:ems="10"
+                                android:gravity="right"
+                                android:hint="new"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:id="@+id/textView22"
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="start"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:text="Total"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/totalStock"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:text="0"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/packetCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Packet / Offer Set"
+                android:textAlignment="textStart"
+               />
+
+            <LinearLayout
+                android:id="@+id/packetLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="start"
+                        android:layout_weight=".4"
+                        android:gravity="center_vertical"
+                        android:text="Packet Price"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/itemPricePkt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/itemName"
+                        android:layout_alignRight="@+id/itemName"
+                        android:layout_below="@+id/itemName"
+                        android:layout_weight=".6"
+                        android:ems="10"
+                        android:gravity="right"
+                        android:hint="Pkt Price"
+                        android:inputType="number" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView17"
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_alignStart="@+id/packetPrice"
+                        android:layout_alignLeft="@+id/packetPrice"
+                        android:layout_below="@+id/packetPrice"
+                        android:layout_weight=".4"
+                        android:gravity="center_vertical"
+                        android:text="Pkt Stock"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".6"
+                        android:gravity="right"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:text="Current"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/existingStockPkt"
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_alignStart="@+id/itemPrice"
+                                android:layout_below="@+id/packetPrice"
+                                android:layout_weight=".5"
+                                android:gravity="right|center_vertical"
+                                android:paddingRight="5dp"
+                                android:text="Stock"
+                                android:textSize="18sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ToggleButton
+                                android:id="@+id/addSubTogglePkt"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:background="@android:color/background_light"
+                                android:text="ToggleButton"
+                                android:textAlignment="textEnd"
+                                android:textOff="Add +"
+                                android:textOn="Subtract -" />
+
+                            <EditText
+                                android:id="@+id/itemStockPkt"
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_centerVertical="true"
+                                android:layout_toStartOf="@+id/packetPrice"
+                                android:layout_weight=".5"
+                                android:ems="10"
+                                android:gravity="right"
+                                android:hint="add stock"
+                                android:inputType="number" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:id="@+id/textView22Pkt"
+                                android:layout_width="0dp"
+                                android:layout_height="45dp"
+                                android:layout_gravity="start"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:text="Total"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/totalStockPkt"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight=".5"
+                                android:gravity="center_vertical"
+                                android:text="TextView"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#e2e2e2"
+            android:text="CANCEL"
+            android:textColor="@android:color/background_dark" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="98dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            android:background="@android:color/background_dark"
+            android:text="VALIDATE"
+            android:textColor="@android:color/background_light" />
+    </LinearLayout>
+
+
+</RelativeLayout>

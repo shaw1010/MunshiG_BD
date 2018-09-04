@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "522137832118",
+    "firebase_url": "https://munshibd-a2445.firebaseio.com",
+    "project_id": "munshibd-a2445",
+    "storage_bucket": "munshibd-a2445.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522137832118:android:7bd331abdd34dd73",
+        "android_client_info": {
+          "package_name": "com.munshig.shaw.munshig_business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522137832118-6hbggib1g48csim4rjj371kbmuasrcid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.munshig.shaw.munshig_business",
+            "certificate_hash": "178b706865c98c06759bd4b14eb1079cbfd32caf"
+          }
+        },
+        {
+          "client_id": "522137832118-iodn52jgvk60e0g260n5krvdoc9993kl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyK8BdkxDNDUcddp2nPUZj4IYVCTqIOys"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522137832118-iodn52jgvk60e0g260n5krvdoc9993kl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

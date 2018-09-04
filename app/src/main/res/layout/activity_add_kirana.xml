@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.AddKirana">
+
+    <EditText
+        android:id="@+id/kirana_name_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:hint="Kirana: "
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/vendor_name_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kirana_name_add"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:hint="Kiranedar: "
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/address_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vendor_name_add"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:hint="Address: "
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp"
+        android:textSize="20dp" />
+
+    <Spinner
+        android:id="@+id/size_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address_add"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp" />
+
+    <ImageButton
+        android:id="@+id/capture_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="25dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_below="@+id/size_add"/>
+
+    <TextView
+        android:id="@+id/path_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/size_add"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_toRightOf="@id/capture_image"
+        android:text="Upload Image"
+        android:textColor="#a7a7a7"
+        android:textSize="20dp" />
+
+
+    <ProgressBar
+        android:id="@+id/progress_upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_below="@+id/capture_image"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="50dp"
+        android:layout_below="@+id/capture_image"
+        android:layout_marginTop="40dp"
+        android:paddingBottom="15dp"
+        android:paddingRight="25dp"
+        android:paddingTop="15dp"
+        android:text="Add Kirana"
+        android:textColor="#ffff" />
+
+</RelativeLayout>
