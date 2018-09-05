@@ -91,7 +91,8 @@
         android:layout_toRightOf="@id/capture_image"
         android:text="Upload Image"
         android:textColor="#a7a7a7"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        app:fontFamily="@font/noto_sans_italic" />
 
 
     <ProgressBar

@@ -29,7 +29,7 @@ public class GlobalClass extends Application {
         FirebaseFirestore fire;
         List<KiranaModel> list_kirana = new ArrayList<>();
         List<MehboobModel> list_mehboob = new ArrayList<>();
-        List<String> co_mehboob;
+        List<MehboobModel> co_mehboob;
 
     public GlobalClass(KiranaModel kirana, String mobile_no, String name, MehboobModel mehboob) {
         this.kirana = kirana;
@@ -90,11 +90,11 @@ public class GlobalClass extends Application {
         this.mehboob = mehboob;
     }
 
-    public List<String> getCo_mehboob() {
+    public List<MehboobModel> getCo_mehboob() {
         return co_mehboob;
     }
 
-    public void setCo_mehboob(List<String> co_mehboob) {
+    public void setCo_mehboob(List<MehboobModel> co_mehboob) {
         this.co_mehboob = co_mehboob;
     }
 
@@ -128,7 +128,7 @@ public class GlobalClass extends Application {
     }
 
 
-    public List<String> ReadCoMehboobData(String kirana_name){
+    public List<MehboobModel> ReadCoMehboobData(String kirana_name){
 
         fire.collection("Kiranas").whereEqualTo("name", kirana_name).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -139,8 +139,20 @@ public class GlobalClass extends Application {
                             @Override
                             public void onSuccess(QuerySnapshot documentSnapshots) {
                                 for (DocumentSnapshot doc : documentSnapshots){
-                                    if(!list_mehboob.contains(doc.get("mehboob")))
-                                        co_mehboob.add(doc.get("mehboob").toString());
+                                    final MehboobModel mehboobModel = new MehboobModel();
+                                    if(!list_mehboob.contains(doc.get("mehboob"))) {
+                                        mehboobModel.setName(doc.get("mehboob").toString().trim());
+                                        fire.collection("Mehboobs").whereEqualTo("name" , doc.get("mehboob").toString()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot documentSnapshots) {
+                                                for (DocumentSnapshot doc1 : documentSnapshots){
+                                                    mehboobModel.setMobile_no(doc1.getData().get("mobile_no").toString().trim());
+                                                }
+                                            }
+                                        });
+
+                                        co_mehboob.add(mehboobModel);
+                                    }
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {

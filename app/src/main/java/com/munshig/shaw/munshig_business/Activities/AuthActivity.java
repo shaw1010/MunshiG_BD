@@ -119,8 +119,7 @@ public class AuthActivity extends AppCompatActivity {
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
 
                 signInWithPhoneAuthCredential(phoneAuthCredential);
-                GlobalClass globalClass = (GlobalClass) getApplicationContext();
-                globalClass.ReadProfileData(phoneNumber);
+
 
             }
 
@@ -171,8 +170,6 @@ public class AuthActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-
-                            FirebaseUser user = task.getResult().getUser();
 
                             Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                             startActivity(intent);

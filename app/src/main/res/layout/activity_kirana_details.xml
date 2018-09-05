@@ -59,12 +59,17 @@
                 android:textSize="20dp" />
 
             <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
+                android:id="@+id/address_map"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/address_details"
                 android:layout_below="@+id/vendor_name_details"
-                android:layout_marginLeft="40dp"
-                android:layout_toRightOf="@+id/address_details" />
+                android:paddingBottom="15dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_map"
+
+                />
 
             <TextView
                 android:id="@+id/size_details"
@@ -78,6 +83,8 @@
                 android:text="Size of Shop"
                 android:textSize="20dp" />
 
+
+
             <TextView
                 android:id="@+id/co_mehboob_text"
                 android:layout_width="wrap_content"
@@ -90,20 +97,13 @@
                 android:paddingTop="15dp"
                 android:textSize="20dp"
                 />
-
-            <TextView
-                android:id="@+id/co_mehboob_details"
+            <LinearLayout
+                android:id="@+id/comehboob_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text=""
-                android:layout_toRightOf="@+id/co_mehboob_text"
-                android:layout_below="@+id/size_details"
-                android:paddingBottom="15dp"
-                android:paddingLeft="10dp"
-                android:textColor="#000000"
-                android:paddingTop="15dp"
-                android:textSize="20dp"
-                />
+                android:orientation="vertical"/>
+
+
 
             <Button
                 android:id="@+id/barcode_add"
@@ -112,7 +112,7 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="25dp"
                 android:layout_alignParentRight="true"
-                android:layout_below="@id/co_mehboob_details"
+                android:layout_below="@id/co_mehboob_text"
                 android:paddingBottom="15dp"
                 android:paddingLeft="25dp"
                 android:layout_marginBottom="20dp"
@@ -123,7 +123,7 @@
 
             <Button
                 android:id="@+id/speech_add"
-                android:layout_below="@id/co_mehboob_details"
+                android:layout_below="@id/co_mehboob_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"

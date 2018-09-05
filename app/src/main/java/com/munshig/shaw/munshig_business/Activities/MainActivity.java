@@ -15,6 +15,7 @@ import com.munshig.shaw.munshig_business.Models.MehboobModel;
 import com.munshig.shaw.munshig_business.R;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +37,11 @@ public class MainActivity extends AppCompatActivity{
         logo_image = findViewById(R.id.logo_image);
         profile_button = findViewById(R.id.profile_button);
         kirana_button = findViewById(R.id.kirana_button);
+        kirana = new ArrayList<>();
 
-        GlobalClass globalClass = (GlobalClass) getApplicationContext();
-        globalClass.ReadKiranaData(globalClass.getMehboob().getName());
+        final GlobalClass globalClass = (GlobalClass) getApplicationContext();
+        globalClass.ReadProfileData("+919011752453");
+        globalClass.ReadKiranaList(globalClass.getMehboob().getKirana_progress().toString());
 
 
         profile_button.setOnClickListener(new View.OnClickListener() {
@@ -49,10 +52,10 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-
         kirana_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent3 = new Intent(MainActivity.this, KiranaList.class);
                 startActivity(intent3);
             }

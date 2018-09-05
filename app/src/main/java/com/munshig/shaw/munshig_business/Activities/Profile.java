@@ -29,7 +29,6 @@ public class Profile extends AppCompatActivity {
 
         GlobalClass globalClass = (GlobalClass) getApplicationContext();
         getdata(globalClass.getMehboob());
-        globalClass.ReadKiranaList(globalClass.getMehboob().getKirana_progress().toString());
 
 
     }

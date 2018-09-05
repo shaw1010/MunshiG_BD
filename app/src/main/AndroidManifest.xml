@@ -26,6 +26,10 @@
             android:label="@string/title_activity_kirana_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.AddKirana" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
