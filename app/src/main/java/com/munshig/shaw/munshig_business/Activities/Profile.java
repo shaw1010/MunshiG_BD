@@ -28,8 +28,10 @@ public class Profile extends AppCompatActivity {
         score_text = findViewById(R.id.score_text);
 
         GlobalClass globalClass = (GlobalClass) getApplicationContext();
+        if(globalClass.getList_kirana() == null){
+        globalClass.ReadKiranaList(globalClass.getMehboob().getKirana_progress().toString());
+        }
         getdata(globalClass.getMehboob());
-
 
     }
 

@@ -11,6 +11,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mRecyclerView"
         android:layout_width="match_parent"
+        android:layout_below="@+id/search_layout"
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
@@ -29,12 +30,36 @@
         android:background="#0595d2"
         android:src="@android:drawable/ic_input_add" />
 
-    <SearchView
+    <LinearLayout
+        android:id="@+id/search_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/searchView"
-        />
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@android:drawable/ic_menu_search" />
+
+        <EditText
+            android:id="@+id/search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:inputType="textPersonName"
+            android:hint="Name of Kirana" />
+    </LinearLayout>
 
 
 </RelativeLayout>

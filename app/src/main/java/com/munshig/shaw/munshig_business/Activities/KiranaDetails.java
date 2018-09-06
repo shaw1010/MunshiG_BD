@@ -76,8 +76,8 @@ public class KiranaDetails extends AppCompatActivity {
         }
         kirana_act = globalClass.getKirana();
         Log.i( "onCreategetkirana: ", kirana_act.getName().toString());
-        globalClass.ReadCoMehboobData(globalClass.getKirana().getName());
-        co_mehboob = globalClass.getCo_mehboob();
+//        globalClass.ReadCoMehboobData(globalClass.getKirana().getName());
+//        co_mehboob = globalClass.getCo_mehboob();
         getdata(kirana_act);
 
 
@@ -106,10 +106,10 @@ public class KiranaDetails extends AppCompatActivity {
 
     //Setting data in the layout
     private void getdata(KiranaModel kiranaModel){
-        kirana_name_details.append("  "+kiranaModel.getName());
-//        vendor_name_details.append("  "+kiranaModel.getVendor_name());
-//        address_data.setText(kiranaModel.getAddress());
-//        size_details.append("  " + kiranaModel.getSize());
+        kirana_name_details.append("  "+kiranaModel.getName().toUpperCase());
+        vendor_name_details.append("  "+kiranaModel.getVendor_name());
+        address_data.setText(kiranaModel.getAddress());
+        size_details.append("  " + kiranaModel.getSize());
 
 
         //Creating TextView for each Mehboob's Details

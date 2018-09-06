@@ -2,6 +2,11 @@ package com.munshig.shaw.munshig_business.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,22 +33,28 @@ public class MainActivity extends AppCompatActivity{
     MehboobModel user_mehboob;
     List<String> kirana;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Declaring Layouts and Views
         title_text = findViewById(R.id.title_text);
         logo_image = findViewById(R.id.logo_image);
         profile_button = findViewById(R.id.profile_button);
         kirana_button = findViewById(R.id.kirana_button);
         kirana = new ArrayList<>();
 
-        final GlobalClass globalClass = (GlobalClass) getApplicationContext();
-        globalClass.ReadProfileData("+919011752453");
-        globalClass.ReadKiranaList(globalClass.getMehboob().getKirana_progress().toString());
+        //Defining and Calling Data
+        GlobalClass globalClass = (GlobalClass) getApplicationContext();
+        if(globalClass.getMehboob() == null){
+            Log.i( "onCreateGetMehboob: ", "milgayaCatch");
+            globalClass.ReadProfileData("+919011752453");
+        }
 
 
+        //Listeners
         profile_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -45,10 +45,14 @@ public class KiranalistAdapter extends RecyclerView.Adapter<KiranalistAdapter.My
         holder.list_rowlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 Intent intent = new Intent(context, KiranaDetails.class);
                 intent.putExtra("name", kirana.getName());
                 intent.putExtra("vendor_name", kirana.getVendor_name());
                 context.startActivity(intent);
+
             }
         });
     }
@@ -69,5 +73,10 @@ public class KiranalistAdapter extends RecyclerView.Adapter<KiranalistAdapter.My
             vendor_text = itemView.findViewById(R.id.vendor_text);
             list_rowlayout = itemView.findViewById(R.id.list_rowlayout);
         }
+    }
+
+    public void filterList(List<KiranaModel> filterList){
+        name = filterList;
+        notifyDataSetChanged();
     }
 }

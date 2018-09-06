@@ -65,7 +65,8 @@
         android:layout_marginTop="25dp"
         android:paddingBottom="15dp"
         android:paddingLeft="20dp"
-        android:paddingTop="15dp" />
+        android:paddingTop="15dp"
+        android:entries="@array/size"/>
 
     <ImageButton
         android:id="@+id/capture_image"

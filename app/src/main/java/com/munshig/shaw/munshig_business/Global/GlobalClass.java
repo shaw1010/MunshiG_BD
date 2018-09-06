@@ -3,18 +3,24 @@ package com.munshig.shaw.munshig_business.Global;
 import android.app.Application;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.munshig.shaw.munshig_business.Models.BarcodeModel;
 import com.munshig.shaw.munshig_business.Models.KiranaModel;
 import com.munshig.shaw.munshig_business.Models.MehboobModel;
 
 import java.lang.reflect.Array;
+import java.security.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,9 +33,10 @@ public class GlobalClass extends Application {
         String name;
         MehboobModel mehboob;
         FirebaseFirestore fire;
-        List<KiranaModel> list_kirana = new ArrayList<>();
-        List<MehboobModel> list_mehboob = new ArrayList<>();
+        List<KiranaModel> list_kirana;
+        List<MehboobModel> list_mehboob;
         List<MehboobModel> co_mehboob;
+        BarcodeModel search_barcode;
 
     public GlobalClass(KiranaModel kirana, String mobile_no, String name, MehboobModel mehboob) {
         this.kirana = kirana;
@@ -94,6 +101,14 @@ public class GlobalClass extends Application {
         return co_mehboob;
     }
 
+    public BarcodeModel getSearch_barcode() {
+        return search_barcode;
+    }
+
+    public void setSearch_barcode(BarcodeModel search_barcode) {
+        this.search_barcode = search_barcode;
+    }
+
     public void setCo_mehboob(List<MehboobModel> co_mehboob) {
         this.co_mehboob = co_mehboob;
     }
@@ -121,15 +136,10 @@ public class GlobalClass extends Application {
         }
 
 
-    public KiranaModel ReadKiranaData(String name)
-    {
-        
-        return kirana;
-    }
-
-
+    //Fetching Data about Co-Mehboobs
     public List<MehboobModel> ReadCoMehboobData(String kirana_name){
 
+        co_mehboob = new ArrayList<>();list_mehboob=new ArrayList<>();
         fire.collection("Kiranas").whereEqualTo("name", kirana_name).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -168,9 +178,11 @@ public class GlobalClass extends Application {
         return co_mehboob;
     }
 
+
+    //Fetch the Datas of all The Kirana in Progress
     public List<KiranaModel> ReadKiranaList(String kirana_progress)
     {
-
+        list_kirana=new ArrayList<>();
     //Convert the retrieved String to List
         kirana_progress = kirana_progress.replace("[", "");
         kirana_progress = kirana_progress.replace("]", "");
@@ -206,6 +218,49 @@ public class GlobalClass extends Application {
 
         return list_kirana;
     }
+
+
+    //Adding Data to Firebase Firestore
+
+    //Adding new Barcode to Firebase Firestore
+    public void AddBarcode(BarcodeModel newbarcode, String kirana_name){
+        Date date = new Date();
+        Timestamp(Date date);
+        fire.collection("Kiranas").document(kirana_name).collection("Barcodes").document(String.valueOf(FieldValue.serverTimestamp())).set(newbarcode).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(GlobalClass.this, "Successfully Added!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(GlobalClass.this, "Some Error Occured!" + e.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    //Adding new Kirana to Firebase Firestore
+    public void AddKirana(KiranaModel newkirana){
+        fire.collection("Kiranas").document(kirana.getName()).set(newkirana).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(GlobalClass.this, "Successfully Added!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(GlobalClass.this, "Some Error Occured!" + e.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public BarcodeModel SearchBarcode(String barcode){
+
+
+        return search_barcode;
+    }
+
 }
 
 

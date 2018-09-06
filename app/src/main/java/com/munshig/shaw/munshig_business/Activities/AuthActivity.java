@@ -76,6 +76,8 @@ public class AuthActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        mPhoneText.setText("9011752453");
+
         mSendbtn = findViewById(R.id.sendBtn);
         mSendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +158,7 @@ public class AuthActivity extends AppCompatActivity {
 
                 mSendbtn.setEnabled(true);
                 mSendbtn.setText("Verify Code");
+                mCodeText.setText("741085");
 
                 // ...
             }

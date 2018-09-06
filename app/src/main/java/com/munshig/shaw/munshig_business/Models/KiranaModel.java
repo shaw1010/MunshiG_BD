@@ -1,5 +1,7 @@
 package com.munshig.shaw.munshig_business.Models;
 
+import java.util.List;
+
 public class KiranaModel {
     String name;
     String vendor_name;
