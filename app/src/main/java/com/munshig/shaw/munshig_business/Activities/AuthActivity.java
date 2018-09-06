@@ -174,6 +174,8 @@ public class AuthActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
+                            GlobalClass globalClass = (GlobalClass) getApplicationContext();
+                            globalClass.ReadProfileData("+919011752453");
                             Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
