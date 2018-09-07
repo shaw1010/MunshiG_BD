@@ -3,6 +3,7 @@ package com.munshig.shaw.munshig_business.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.munshig.shaw.munshig_business.Global.GlobalClass;
 import com.munshig.shaw.munshig_business.Models.KiranaModel;
 import com.munshig.shaw.munshig_business.R;
 
@@ -37,6 +39,7 @@ public class AddKirana extends AppCompatActivity {
     static final int PICK_IMAGE_REQUEST = 25;
     StorageReference mStorage;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,8 @@ public class AddKirana extends AppCompatActivity {
         add_button = findViewById(R.id.add_button);
         path_image = findViewById(R.id.path_image);
 
+        final GlobalClass globalClass = (GlobalClass) getApplicationContext();
+
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +64,8 @@ public class AddKirana extends AppCompatActivity {
                 newkirana.setVendor_name(vendor_name_add.getText().toString().toLowerCase().trim());
                 newkirana.setAddress(address_add.getText().toString().toLowerCase().trim());
                 newkirana.setSize(size_add.getSelectedItem().toString().toLowerCase().trim());
+
+                globalClass.AddKirana(newkirana);
 
                 Toast.makeText(AddKirana.this, "Hogaya!", Toast.LENGTH_SHORT).show();
 
@@ -85,7 +92,7 @@ public class AddKirana extends AppCompatActivity {
             if (requestCode==PICK_IMAGE_REQUEST && resultCode==RESULT_OK && data !=null && data.getData()!=null){
 
                 uri = data.getData();
-
+                uploadfile();
 
             }
             else{

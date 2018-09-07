@@ -1,8 +1,12 @@
 package com.munshig.shaw.munshig_business.Activities;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
@@ -28,9 +32,7 @@ public class Profile extends AppCompatActivity {
         score_text = findViewById(R.id.score_text);
 
         GlobalClass globalClass = (GlobalClass) getApplicationContext();
-        if(globalClass.getList_kirana() == null){
-        globalClass.ReadKiranaList(globalClass.getMehboob().getKirana_progress().toString());
-        }
+
         getdata(globalClass.getMehboob());
 
     }
@@ -43,4 +45,8 @@ public class Profile extends AppCompatActivity {
         date_text.append(": "+mehboob.getJoining_date().trim());
         score_text.append(": "+mehboob.getScore());
     }
+
+    //This Task is for Loading Mehboob's Profile
+
+
 }

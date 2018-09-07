@@ -1,6 +1,8 @@
 package com.munshig.shaw.munshig_business.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.munshig.shaw.munshig_business.Adapters.KiranalistAdapter;
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
@@ -75,13 +78,13 @@ public class KiranaList extends AppCompatActivity {
             }
         });
 
-
-
         GlobalClass globalClass = (GlobalClass) getApplicationContext();
+
         Log.i( "Inuinu: ", String.valueOf(globalClass.getList_kirana().size()));
         kiranas = globalClass.getList_kirana();
         mAdapter = new KiranalistAdapter(kiranas, KiranaList.this);
         mRecyclerView.setAdapter(mAdapter);
+
     }
 
     private void filter(String text){
@@ -94,4 +97,5 @@ public class KiranaList extends AppCompatActivity {
         }
         mAdapter.filterList(filteredlist);
     }
+
 }
