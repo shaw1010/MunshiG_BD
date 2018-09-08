@@ -25,7 +25,7 @@ public class AddBarcode extends AppCompatActivity{
     FloatingActionButton mSaveButton;
     private String mPhoneNumber;
     BarcodeModel barcodeModel = new BarcodeModel();
-    GlobalClass globalClass = (GlobalClass) getApplicationContext();
+
     Boolean a;
 
 
@@ -48,7 +48,7 @@ public class AddBarcode extends AppCompatActivity{
 
 
         //GlobalClass
-
+        final GlobalClass globalClass = (GlobalClass) getApplicationContext();
 
         //Listeners
         saveButton.setOnClickListener(new View.OnClickListener() {

@@ -63,8 +63,6 @@ public class MyTask3 extends AsyncTask<Void, Void, MehboobModel> {
     @Override
     protected void onPostExecute(MehboobModel mehboobModel) {
 
-
-
         progressBar.setVisibility(View.GONE);
 
         super.onPostExecute(mehboobModel);

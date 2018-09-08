@@ -76,13 +76,14 @@ public class KiranaDetails extends AppCompatActivity {
 
         //Global Class initialisation
         GlobalClass globalClass = (GlobalClass) getApplicationContext();
-        globalClass = (GlobalClass) getApplicationContext();
 
-        //Detting selected Kiranas Data
+        //Getting selected Kiranas Data
         for (int i = 0; i < globalClass.getList_kirana().size(); i++) {
             if (globalClass.getList_kirana().get(i).getName().equals(name.toLowerCase()))
                 globalClass.setKirana(globalClass.getList_kirana().get(i));
         }
+
+
         kirana_act = globalClass.getKirana();
         String url = globalClass.getKirana().getImage_path();
 
@@ -97,8 +98,8 @@ public class KiranaDetails extends AppCompatActivity {
         myTask2.execute();
         getdata(kirana_act);
 
-        //Listeners
 
+        //Listeners
         //1. Go to Add Barcode Activity
         barcode_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,12 +124,6 @@ public class KiranaDetails extends AppCompatActivity {
             }
         });
 
-//        comehboob_layout.getFocusedChild().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(finalGlobalClass, "jo hua accha hua", Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     //Setting data in the layout
@@ -146,7 +141,7 @@ public class KiranaDetails extends AppCompatActivity {
         private Context context;
         String kirananame;
         GlobalClass globalClass;
-        LinearLayout comehboob_layout;
+        private LinearLayout comehboob_layout;
 
 
         MyTask2(Context context, String kirananame, GlobalClass globalClass, LinearLayout comehboob_layout) {
@@ -161,7 +156,7 @@ public class KiranaDetails extends AppCompatActivity {
         protected List<MehboobModel> doInBackground(Void... voids) {
 
             if (globalClass.getCo_mehboob().isEmpty()) {
-                globalClass.ReadCoMehboobData(kirananame);
+                globalClass.ReadCoMehboobData(kirananame.toLowerCase());
             }
             Log.i( "doInBackground:sizeofcoco ", String.valueOf(globalClass.getCo_mehboob().size()));
             return globalClass.getCo_mehboob();
