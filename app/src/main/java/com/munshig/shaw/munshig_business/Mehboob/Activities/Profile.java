@@ -1,12 +1,7 @@
-package com.munshig.shaw.munshig_business.Activities;
+package com.munshig.shaw.munshig_business.Mehboob.Activities;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
@@ -16,6 +11,7 @@ import com.munshig.shaw.munshig_business.R;
 public class Profile extends AppCompatActivity {
 
     TextView profile_text, name_text, contact_text, totalkiranas_text, scans_text, date_text, score_text;
+    TextView serial_text;
     MehboobModel mehboob = new MehboobModel();
 
     @Override
@@ -32,6 +28,7 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         profile_text = findViewById(R.id.profile_text);
+        serial_text = findViewById(R.id.serial_text);
         name_text = findViewById(R.id.name_text);
         contact_text = findViewById(R.id.contact_text);
         totalkiranas_text = findViewById(R.id.totalkiranas_text);
@@ -45,6 +42,7 @@ public class Profile extends AppCompatActivity {
     }
 
     private void getdata(MehboobModel mehboob){
+        serial_text.append(": " +mehboob.getSerial().trim());
         name_text.append(": "+mehboob.getName().trim());
         contact_text.append(": "+mehboob.getMobile_no().trim());
         totalkiranas_text.append(": "+mehboob.getTotal_kiranas());

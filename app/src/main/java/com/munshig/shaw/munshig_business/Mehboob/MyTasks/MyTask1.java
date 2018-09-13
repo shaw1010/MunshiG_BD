@@ -1,4 +1,4 @@
-package com.munshig.shaw.munshig_business.MyTasks;
+package com.munshig.shaw.munshig_business.Mehboob.MyTasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
 import com.munshig.shaw.munshig_business.Models.KiranaModel;
@@ -19,14 +20,16 @@ public class MyTask1 extends AsyncTask<Void, Void, List<KiranaModel>> {
     ProgressBar progressBar;
     Button kirana_button;
     Button profile_button;
+    TextView alert;
 
-    public MyTask1(Context context, String phonenumber, GlobalClass globalClass, ProgressBar progressBar, Button kirana_button, Button profile_button){
+    public MyTask1(Context context, String phonenumber, GlobalClass globalClass, ProgressBar progressBar, Button kirana_button, Button profile_button, TextView alert){
         this.context = context;
         this.phonenumber = phonenumber;
         this.globalClass = globalClass;
         this.kirana_button = kirana_button;
         this.profile_button = profile_button;
         this.progressBar = progressBar;
+        this.alert = alert;
     }
 
 
@@ -36,16 +39,13 @@ public class MyTask1 extends AsyncTask<Void, Void, List<KiranaModel>> {
         synchronized (this) {
 
             if (globalClass.getUserMehboob() == null) {
-                globalClass.ReadProfileData(phonenumber);
+                globalClass.ReadProfileData(phonenumber, kirana_button, profile_button, alert);
                 globalClass.getUserMehboob();
                 publishProgress();
 
             }
-            kirana_button.setEnabled(false);
-            profile_button.setEnabled(false);
             globalClass.ReadAllMehboobsData();
             globalClass.ReadAllBarcode(kirana_button, profile_button, progressBar);
-
         }
 
         return globalClass.getKiranaList();
@@ -68,8 +68,6 @@ public class MyTask1 extends AsyncTask<Void, Void, List<KiranaModel>> {
 
     @Override
     protected void onPostExecute(List<KiranaModel> mehboobModel) {
-
-        globalClass.setKiranaList(mehboobModel);
         Log.i( "onPostExecute: ", String.valueOf(globalClass.getKiranaList().size()));
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.MainActivity">
+    tools:context=".Mehboob.Activities.MainActivity">
 
     <TextView
         android:id="@+id/title_text"
@@ -12,35 +12,69 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:gravity="center"
-        android:text="MunshiB"
+        android:text="MunshiG"
         android:textColor="#000000"
         android:textSize="21dp" />
 
     <ImageView
         android:id="@+id/logo_image"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
+        android:layout_height="175dp"
         android:layout_below="@+id/title_text"
         android:scaleType="fitCenter"
         android:src="@drawable/munshi_logo"
         android:layout_marginTop="25dp"/>
 
-    <Button
-        android:id="@+id/kirana_button"
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_height="wrap_content"
-        android:text="KIRANAS"
-        android:layout_margin="40dp"
+        android:layout_below="@+id/logo_image"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
         />
-    <Button
-        android:id="@+id/profile_button"
+
+    <TextView
+        android:id="@+id/alert"
         android:layout_width="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_height="wrap_content"
-        android:text="PROFILE"
-        android:layout_margin="40dp"
-        />
+        android:text="TextView"
+        android:layout_below="@+id/logo_image"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/profile_button"
+            android:layout_width="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:text="PROFILE"
+            android:layout_weight="1"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            />
+
+        <Button
+            android:id="@+id/kirana_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:paddingBottom="25dp"
+            android:paddingTop="25dp"
+            android:text="KIRANAS" />
+
+    </LinearLayout>
+
 </RelativeLayout>

@@ -12,16 +12,18 @@ public class MehboobModel{
     String joining_date;
     List<String> kirana_progress;
     String city;
+    String serial;
 
     public MehboobModel() {
     }
 
-    public MehboobModel(String name, String mobile_no, String score, String total_kiranas, String total_scans, String joining_date, List<String> kirana_progress, String city) {
+    public MehboobModel(String name, String serial, String mobile_no, String score, String total_kiranas, String total_scans, String joining_date, List<String> kirana_progress, String city) {
         this.name = name;
         this.mobile_no = mobile_no;
         this.score = score;
         this.total_kiranas = total_kiranas;
         this.total_scans = total_scans;
+        this.serial = serial;
         this.joining_date = joining_date;
         this.kirana_progress = kirana_progress;
         this.city = city;
@@ -89,5 +91,13 @@ public class MehboobModel{
 
     public void setKirana_progress(List<String> kirana_progress) {
         this.kirana_progress = kirana_progress;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 }

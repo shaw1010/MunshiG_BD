@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.munshig.shaw.munshig_business">
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <application
         android:allowBackup="true"
@@ -11,22 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.AuthActivity">
+        <activity android:name=".Mehboob.Activities.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity" />
-        <activity android:name=".Activities.Profile" />
-        <activity android:name=".Activities.KiranaDetails" />
-        <activity android:name=".Activities.AddBarcode" />
+        <activity android:name=".Mehboob.Activities.MainActivity" />
+        <activity android:name=".Mehboob.Activities.Profile" />
+        <activity android:name=".Mehboob.Activities.KiranaDetails" />
+        <activity android:name=".Mehboob.Activities.AddBarcode" />
         <activity
-            android:name=".Activities.KiranaList"
+            android:name=".Mehboob.Activities.KiranaList"
             android:label="@string/title_activity_kirana_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activities.AddKirana" />
+        <activity android:name=".Mehboob.Activities.AddKirana" />
 
         <meta-data
             android:name="preloaded_fonts"

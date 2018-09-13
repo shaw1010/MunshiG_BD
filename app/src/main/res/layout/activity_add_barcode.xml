@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.AddBarcode">
+    tools:context=".Mehboob.Activities.AddBarcode">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,8 +19,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:ems="10"
+            android:focusedByDefault="false"
             android:hint="Barcode Number "
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:textAlignment="center" />
 
         <TextView
@@ -46,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,8 +89,8 @@
                         android:id="@+id/textPrice"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
-                        android:layout_alignStart="@+id/itemName"
                         android:layout_alignLeft="@+id/itemName"
+                        android:layout_alignStart="@+id/itemName"
                         android:layout_below="@+id/itemName"
                         android:layout_weight=".4"
                         android:gravity="center_vertical"
@@ -100,8 +102,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/itemName"
-                        android:layout_toStartOf="@+id/packetPrice"
                         android:layout_toLeftOf="@+id/packetPrice"
+                        android:layout_toStartOf="@+id/packetPrice"
                         android:layout_weight=".6"
                         android:ems="10"
                         android:gravity="right"
@@ -118,8 +120,8 @@
                         android:id="@+id/textPrice2"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
-                        android:layout_alignStart="@+id/itemName"
                         android:layout_alignLeft="@+id/itemName"
+                        android:layout_alignStart="@+id/itemName"
                         android:layout_below="@+id/itemName"
                         android:layout_weight=".4"
                         android:gravity="center_vertical"
@@ -131,8 +133,8 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/itemName"
-                        android:layout_toStartOf="@+id/packetPrice"
                         android:layout_toLeftOf="@+id/packetPrice"
+                        android:layout_toStartOf="@+id/packetPrice"
                         android:layout_weight=".6"
                         android:ems="10"
                         android:gravity="right"
@@ -142,6 +144,7 @@
 
 
                 <LinearLayout
+                    android:id="@+id/stockLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -150,9 +153,9 @@
                         android:id="@+id/textStock"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/itemName"
                         android:layout_alignStart="@+id/itemName"
                         android:layout_below="@+id/packetPrice"
-                        android:layout_alignLeft="@+id/itemName"
                         android:layout_weight=".4"
                         android:gravity="center_vertical"
                         android:text="STOCK"
@@ -182,8 +185,8 @@
                                 android:id="@+id/existingStock"
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
-                                android:layout_alignStart="@+id/itemPrice"
                                 android:layout_alignLeft="@+id/itemPrice"
+                                android:layout_alignStart="@+id/itemPrice"
                                 android:layout_below="@+id/packetPrice"
                                 android:layout_weight=".5"
                                 android:gravity="right|center_vertical"
@@ -201,11 +204,11 @@
                                 android:id="@+id/addSubToggle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="end"
                                 android:layout_weight=".5"
                                 android:background="@android:color/background_light"
                                 android:text="ToggleButton"
                                 android:textAlignment="textEnd"
-                                android:layout_gravity="end"
                                 android:textOff="Add +"
                                 android:textOn="Subtract -" />
 
@@ -214,8 +217,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="45dp"
                                 android:layout_centerVertical="true"
-                                android:layout_toStartOf="@+id/packetPrice"
                                 android:layout_toLeftOf="@+id/packetPrice"
+                                android:layout_toStartOf="@+id/packetPrice"
                                 android:layout_weight=".5"
                                 android:ems="10"
                                 android:gravity="right"

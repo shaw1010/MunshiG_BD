@@ -1,8 +1,7 @@
-package com.munshig.shaw.munshig_business.Adapters;
+package com.munshig.shaw.munshig_business.Mehboob.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.munshig.shaw.munshig_business.Activities.KiranaDetails;
+import com.munshig.shaw.munshig_business.Mehboob.Activities.KiranaDetails;
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
 import com.munshig.shaw.munshig_business.Models.KiranaModel;
 import com.munshig.shaw.munshig_business.R;
@@ -47,8 +46,9 @@ public class KiranalistAdapter extends RecyclerView.Adapter<KiranalistAdapter.My
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, KiranaDetails.class);
-                intent.putExtra("name", kirana.getName());
-                intent.putExtra("vendor_name", kirana.getVendor_name());
+                GlobalClass globalClass = (GlobalClass) context.getApplicationContext();
+                globalClass.setSerial(kirana.getSerial());
+                intent.putExtra("serial", kirana.getVendor_name());
                 context.startActivity(intent);
 
             }

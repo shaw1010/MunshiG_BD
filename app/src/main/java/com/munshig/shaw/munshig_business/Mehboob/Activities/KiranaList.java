@@ -1,27 +1,21 @@
-package com.munshig.shaw.munshig_business.Activities;
+package com.munshig.shaw.munshig_business.Mehboob.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
-import com.munshig.shaw.munshig_business.Adapters.KiranalistAdapter;
+import com.munshig.shaw.munshig_business.Mehboob.Adapters.KiranalistAdapter;
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
 import com.munshig.shaw.munshig_business.Models.KiranaModel;
-import com.munshig.shaw.munshig_business.Models.MehboobModel;
 import com.munshig.shaw.munshig_business.R;
 
 import java.util.ArrayList;
@@ -31,10 +25,8 @@ public class KiranaList extends AppCompatActivity {
 
     RecyclerView mRecyclerView;
     FloatingActionButton add_button;
-    SearchView searchView;
     KiranalistAdapter mAdapter;
     List<KiranaModel> kiranas;
-    KiranaModel kirana;
     private RecyclerView.LayoutManager mLayoutManager;
     EditText search_edit;
 
@@ -93,13 +85,10 @@ public class KiranaList extends AppCompatActivity {
         List<KiranaModel> filteredlist = new ArrayList<>();
 
         for(KiranaModel kirana : kiranas){
-            if(kirana.getName().toLowerCase().contains(text.toLowerCase())){
+            if(kirana.getName().toLowerCase().trim().contains(text.toLowerCase().trim()) || kirana.getSerial().toLowerCase().trim().contains(text.toLowerCase().trim())){
                 filteredlist.add(kirana);
             }
         }
         mAdapter.filterList(filteredlist);
     }
-
-
-
 }
