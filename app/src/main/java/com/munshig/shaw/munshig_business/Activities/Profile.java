@@ -19,6 +19,14 @@ public class Profile extends AppCompatActivity {
     MehboobModel mehboob = new MehboobModel();
 
     @Override
+    protected void onStart() {
+        GlobalClass globalClass = (GlobalClass) getApplicationContext();
+        globalClass.getUserMehboob();
+
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
@@ -32,8 +40,7 @@ public class Profile extends AppCompatActivity {
         score_text = findViewById(R.id.score_text);
 
         GlobalClass globalClass = (GlobalClass) getApplicationContext();
-
-        getdata(globalClass.getMehboob());
+        getdata(globalClass.getUserMehboob());
 
     }
 

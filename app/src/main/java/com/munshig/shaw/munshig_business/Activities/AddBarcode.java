@@ -1,21 +1,29 @@
 package com.munshig.shaw.munshig_business.Activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.BaseKeyListener;
+import android.text.method.KeyListener;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
 import com.munshig.shaw.munshig_business.Models.BarcodeModel;
 import com.munshig.shaw.munshig_business.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.view.View.GONE;
 
 public class AddBarcode extends AppCompatActivity{
 
@@ -25,8 +33,10 @@ public class AddBarcode extends AppCompatActivity{
     FloatingActionButton mSaveButton;
     private String mPhoneNumber;
     BarcodeModel barcodeModel = new BarcodeModel();
-
-    Boolean a;
+    BarcodeModel searchedBarcode = new BarcodeModel();
+    LinearLayout hiddenLayout;
+    List<Long> prices = new ArrayList<>();
+    int temp=0;
 
 
     @Override
@@ -44,23 +54,52 @@ public class AddBarcode extends AppCompatActivity{
         existingStock = findViewById(R.id.scannedBarcode);
         itemStock = findViewById(R.id.itemStock);
         totalStock = findViewById(R.id.totalStock);
-
+        hiddenLayout = findViewById(R.id.hiddenLayout);
 
 
         //GlobalClass
         final GlobalClass globalClass = (GlobalClass) getApplicationContext();
+        hiddenLayout.setVisibility(View.GONE);
+
+
+        scannedBarcode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                for(int i = 0; i < globalClass.getBarcodeList().size(); i++) {
+                    Log.i("onFocusChange: ", globalClass.getBarcodeList().get(i).getName());
+                    if(globalClass.getBarcodeList().get(i).getBarcode().equals(scannedBarcode.getText().toString())){
+                           searchedBarcode = globalClass.getBarcodeList().get(i);
+                           hiddenLayout.setVisibility(View.VISIBLE);
+                           itemName.setText(searchedBarcode.getName());
+                           prices = searchedBarcode.getPrice();
+                           itemPrice.setText(String.valueOf(prices.get(0)));
+                           itemPrice2.setText(String.valueOf(prices.get(1)));
+                           temp = 1;
+                    }
+                    else
+                        hiddenLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         //Listeners
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                verifyform();
+                prices.clear();
                 barcodeModel.setBarcode(scannedBarcode.getText().toString().trim());
                 barcodeModel.setName(itemName.getText().toString().trim());
-                barcodeModel.setPrice(itemPrice.getText().toString().trim());
-                barcodeModel.setPacket(itemPrice2.getText().toString().trim());
-
-                globalClass.AddBarcode(barcodeModel, globalClass.getKirana().getName());
+                prices.add(Long.parseLong(itemPrice.getText().toString()));
+                prices.add(Long.parseLong(itemPrice2.getText().toString()));
+                barcodeModel.setPrice(prices);
+                if (temp==1){
+                    barcodeModel.setModified(true);
+                }
+                else
+                    barcodeModel.setModified(false);
+                globalClass.AddBarcode(barcodeModel, globalClass.getKiranaSelected().getName());
                 Toast.makeText(AddBarcode.this, "Hogaya!", Toast.LENGTH_SHORT).show();
 
             }
@@ -75,43 +114,24 @@ public class AddBarcode extends AppCompatActivity{
         });
     }
 
-    public class MyTask4 extends AsyncTask<Void, Void, BarcodeModel> {
-        private Context context;
-        GlobalClass globalClass;
-        private String barcode, name;
 
-        MyTask4(Context context, String barcode, GlobalClass globalClass, String name){
-            this.context = context;
-            this.barcode = barcode;
-            this.name = name;
-            this.globalClass = globalClass;
+    public void verifyform(){
+        if (scannedBarcode.getText().toString().isEmpty()){
+            scannedBarcode.setError("Barcode is Must");
+            scannedBarcode.requestFocus();
+            return;
+        }
+        if(itemName.getText().toString().isEmpty()){
+            itemName.setError("Enter the Name of the Item!");
+            itemName.requestFocus();
+            return;
+        }
+        if(itemPrice.getText().toString().isEmpty()){
+            itemPrice.setError("Enter the Price of the Item!");
+            itemPrice.requestFocus();
+            return;
         }
 
-
-        @Override
-        protected BarcodeModel doInBackground(Void... voids) {
-
-            if (globalClass.getSearch_barcode().getBarcode().isEmpty()) {
-                globalClass.SearchBarcode(barcode, name);
-            }
-            return globalClass.getSearch_barcode();
-        }
-
-        @Override
-        protected void onPreExecute() {
-
-
-            super.onPreExecute();
-        }
-
-        @Override
-        protected void onPostExecute(BarcodeModel mehboobModel) {
-
-            itemName.setText(globalClass.getSearch_barcode().getName());
-            itemPrice.setText(globalClass.getSearch_barcode().getPrice());
-            itemPrice2.setText(globalClass.getSearch_barcode().getPacket());
-
-            super.onPostExecute(mehboobModel);
-        }
     }
+
 }

@@ -11,11 +11,12 @@ public class MehboobModel{
     String total_scans;
     String joining_date;
     List<String> kirana_progress;
+    String city;
 
     public MehboobModel() {
     }
 
-    public MehboobModel(String name, String mobile_no, String score, String total_kiranas, String total_scans, String joining_date, List<String> kirana_progress) {
+    public MehboobModel(String name, String mobile_no, String score, String total_kiranas, String total_scans, String joining_date, List<String> kirana_progress, String city) {
         this.name = name;
         this.mobile_no = mobile_no;
         this.score = score;
@@ -23,6 +24,15 @@ public class MehboobModel{
         this.total_scans = total_scans;
         this.joining_date = joining_date;
         this.kirana_progress = kirana_progress;
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public String getName() {

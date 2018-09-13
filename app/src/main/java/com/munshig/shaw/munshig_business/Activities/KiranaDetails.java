@@ -1,13 +1,18 @@
 package com.munshig.shaw.munshig_business.Activities;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +21,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
@@ -24,12 +30,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.munshig.shaw.munshig_business.Global.GlobalClass;
 import com.munshig.shaw.munshig_business.Models.KiranaModel;
 import com.munshig.shaw.munshig_business.Models.MehboobModel;
@@ -46,9 +61,13 @@ public class KiranaDetails extends AppCompatActivity {
     ImageView kirana_pic;
     TextView kirana_name_details, vendor_name_details, address_details, size_details, co_mehboob_details, co_mehboob_text, address_data;
     Button barcode_add, speech_add;
-    List<MehboobModel> co_mehboob;
     KiranaModel kirana_act;
     LinearLayout comehboob_layout;
+    ImageButton addressMap;
+    ProgressBar progressBar;
+    static List<MehboobModel> Co_Mehboob;
+    FirebaseFirestore fire, lite;
+    List<String> MehboobList = new ArrayList<>();
 
 
     @Override
@@ -67,39 +86,31 @@ public class KiranaDetails extends AppCompatActivity {
         co_mehboob_text = findViewById(R.id.co_mehboob_text);
         address_data = findViewById(R.id.address_data);
         comehboob_layout = findViewById(R.id.comehboob_layout);
+        progressBar = findViewById(R.id.progressBar);
+        addressMap = findViewById(R.id.addressMap);
 
 
-        //Getting the Details of the Selected Kirana via Intent
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        fire = FirebaseFirestore.getInstance();
+        lite = FirebaseFirestore.getInstance();
+        Co_Mehboob = new ArrayList<>();
 
 
         //Global Class initialisation
-        GlobalClass globalClass = (GlobalClass) getApplicationContext();
-
-        //Getting selected Kiranas Data
-        for (int i = 0; i < globalClass.getList_kirana().size(); i++) {
-            if (globalClass.getList_kirana().get(i).getName().equals(name.toLowerCase()))
-                globalClass.setKirana(globalClass.getList_kirana().get(i));
-        }
+        final GlobalClass globalClass = (GlobalClass) getApplicationContext();
+        globalClass.ReadKirana(globalClass.getKiranaList(), globalClass.getKiranaName());
 
 
-        kirana_act = globalClass.getKirana();
-        String url = globalClass.getKirana().getImage_path();
+        MehboobList = globalClass.getKiranaSelected().getMehboobs();
+        Log.i("onCreate:MehboobList ", String.valueOf(MehboobList.size()));
 
 
-        //Displaying the Image
-        Picasso.get().load(url).fit().centerCrop().into(kirana_pic);
-        Log.i("onCreategetkirana: ", kirana_act.getName().toString());
-
-
-        //Initializing MyTask2 : Fetching list of Kirana in Progress
-        MyTask2 myTask2 = new MyTask2(KiranaDetails.this, kirana_act.getName(), globalClass, comehboob_layout);
+        //MyTask
+        MyTask2 myTask2 = new MyTask2(KiranaDetails.this, globalClass.getKiranaName(), globalClass, comehboob_layout, progressBar);
         myTask2.execute();
-        getdata(kirana_act);
 
 
-        //Listeners
+        //Onclick Listeners
+
         //1. Go to Add Barcode Activity
         barcode_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,10 +122,10 @@ public class KiranaDetails extends AppCompatActivity {
 
         //2. Open Google maps for Directions to the address
         final GlobalClass finalGlobalClass = globalClass;
-        address_data.setOnClickListener(new View.OnClickListener() {
+        addressMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4192?q=" + Uri.encode(finalGlobalClass.getKirana().getAddress() + ",Udaipur"));
+                Uri gmmIntentUri = Uri.parse("geo:37.7749,-122.4192?q=" + Uri.encode(finalGlobalClass.getKiranaSelected().getAddress() + ",Udaipur"));
 
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
@@ -124,75 +135,153 @@ public class KiranaDetails extends AppCompatActivity {
             }
         });
 
+//        fire.collection("Kiranas").document(globalClass.getKiranaSelected().getName()).collection("Barcodes").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//                if(task.isSuccessful()){
+//
+//                    Log.i( "comehboob-onComplete: ", String.valueOf(task.getResult().getDocuments().size()));
+//                    for(DocumentSnapshot doc : task.getResult()){
+//
+//                        final MehboobModel mehboobModel = new MehboobModel();
+//
+//                        Log.i( "+++ " , doc.getData().get("mehboob").toString());
+//                        mehboobModel.setName(doc.getData().get("mehboob").toString());
+//
+//                        lite.collection("Mehboobs").whereEqualTo("name", doc.getData().get("mehboob").toString()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//
+//                            @Override
+//                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//
+//                                if(task.isSuccessful()){
+//                                    for(DocumentSnapshot doc1 : task.getResult()){
+//
+//                                        Log.i( "onCompmehboooobaaa " , doc1.getData().get("mobile_no").toString());
+//                                        mehboobModel.setMobile_no(doc1.getData().get("mobile_no").toString());
+//                                        Co_Mehboob.add(mehboobModel);
+//                                    }
+//                                }
+//                                Log.i( "onComcomehboobsize", String.valueOf(Co_Mehboob.size()));
+//                            }
+//                        });
+//
+//
+//                    }
+//                }
+//            }
+//
+//        });
+
+
     }
 
+
     //Setting data in the layout
-    private void getdata(KiranaModel kiranaModel)
-    {
+    private void getdata(KiranaModel kiranaModel, final GlobalClass globalClass, final List<MehboobModel> Co_Mehboob) {
         kirana_name_details.append("  " + kiranaModel.getName().toUpperCase());
         vendor_name_details.append("  " + kiranaModel.getVendor_name());
         address_data.setText(kiranaModel.getAddress());
         size_details.append("  " + kiranaModel.getSize());
+//        Picasso.with(this).load((kiranaModel.getImage_path())).fit().into(kirana_pic);
 
+        Log.i("getdata: aslimazza", String.valueOf(Co_Mehboob.size()));
+        for ( int i = 0; i < Co_Mehboob.size(); i++) {
+            final TextView tv = new TextView(this);
+            Log.i("getdata: sizecmmo", String.valueOf(Co_Mehboob.size()));
+            LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+            tv.setLayoutParams(lparams);
+            tv.setText(Co_Mehboob.get(i).getName().toUpperCase());
+            tv.setPadding(5, 5, 5, 5);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+            tv.setId(i);
+
+            final int finalI1 = i;
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + Co_Mehboob.get(finalI1).getMobile_no()));
+                        if (ActivityCompat.checkSelfPermission(KiranaDetails.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        startActivity(intent);
+                    }catch (Exception e){
+                        Toast.makeText(globalClass, "Call Permission not Given: " + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+
+            final int finalI = i;
+
+            comehboob_layout.addView(tv);
+        }
     }
 
 
-    static class MyTask2 extends AsyncTask<Void, Void, List<MehboobModel>> {
-        private Context context;
+    class MyTask2 extends AsyncTask<Void, Void, List<MehboobModel>> {
+        Context context;
         String kirananame;
         GlobalClass globalClass;
-        private LinearLayout comehboob_layout;
+        LinearLayout comehboob_layout;
+        ProgressBar progressBar;
 
 
-        MyTask2(Context context, String kirananame, GlobalClass globalClass, LinearLayout comehboob_layout) {
+        MyTask2(Context context, String kirananame, GlobalClass globalClass, LinearLayout comehboob_layout, ProgressBar progressBar) {
             this.context = context;
             this.kirananame = kirananame;
             this.globalClass = globalClass;
             this.comehboob_layout = comehboob_layout;
+            this.progressBar = progressBar;
         }
 
 
         @Override
         protected List<MehboobModel> doInBackground(Void... voids) {
 
-            if (globalClass.getCo_mehboob().isEmpty()) {
-                globalClass.ReadCoMehboobData(kirananame.toLowerCase());
+            for(int i = 0; i < globalClass.getCoMehboobList().size(); i++) {
+                for (int j = 0; j < MehboobList.size(); j++) {
+                    if (globalClass.getCoMehboobList().get(i).getName().equals(MehboobList.get(j))) {
+                        Co_Mehboob.add(globalClass.getCoMehboobList().get(i));
+                        Log.i( "onCo-Mehboob*static ", String.valueOf(Co_Mehboob.size()));
+                    }
+                }
             }
-            Log.i( "doInBackground:sizeofcoco ", String.valueOf(globalClass.getCo_mehboob().size()));
-            return globalClass.getCo_mehboob();
+            Log.i( "doInBack:sizeofcoco ", String.valueOf(globalClass.getCoMehboobList()));
+            return Co_Mehboob;
         }
 
         @Override
         protected void onPreExecute() {
+
+            comehboob_layout.setEnabled(false);
             super.onPreExecute();
         }
 
         @Override
-        protected void onPostExecute(List<MehboobModel> aVoid) {
+        protected void onPostExecute(List<MehboobModel> golo) {
 
-            Log.i("getdata: ", String.valueOf(globalClass.getCo_mehboob().size()));
+            GlobalClass globalClass = (GlobalClass) context.getApplicationContext();
+            Log.i("getdata: ", String.valueOf(Co_Mehboob.size()));
+            getdata(globalClass.getKiranaSelected(), globalClass, Co_Mehboob);
+            super.onPostExecute(golo);
+        }
 
-            TextView[] tv = new TextView[globalClass.getCo_mehboob().size()];
-            for (int i = 0; i < globalClass.getCo_mehboob().size(); i++) {
-
-                Log.i("getdata: sizecmmo", String.valueOf(globalClass.getCo_mehboob().size()));
-                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                LinearLayout.LayoutParams lparams1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-                comehboob_layout.setOrientation(LinearLayout.HORIZONTAL);
-                comehboob_layout.setLayoutParams(lparams1);
-                tv[i].setLayoutParams(lparams);
-                tv[i].setText(globalClass.getCo_mehboob().get(i).getName());
-                tv[i].setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-                tv[i].setId(i);
-
-                final int finalI = i;
-
-
-                comehboob_layout.addView(tv[i]);
-            }
-
-            super.onPostExecute(aVoid);
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            comehboob_layout.setEnabled(true);
+            super.onProgressUpdate(values);
         }
     }
 }

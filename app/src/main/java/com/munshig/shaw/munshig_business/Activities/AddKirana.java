@@ -29,7 +29,7 @@ import com.munshig.shaw.munshig_business.R;
 
 public class AddKirana extends AppCompatActivity {
 
-    EditText kirana_name_add, vendor_name_add, address_add;
+    EditText kirana_name_add, vendor_name_add, address_add, city_add;
     Spinner size_add;
     ImageButton capture_image;
     Button add_button;
@@ -53,28 +53,30 @@ public class AddKirana extends AppCompatActivity {
         progress_upload = findViewById(R.id.progress_upload);
         add_button = findViewById(R.id.add_button);
         path_image = findViewById(R.id.path_image);
+        city_add = findViewById(R.id.city_add);
 
         final GlobalClass globalClass = (GlobalClass) getApplicationContext();
 
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 KiranaModel newkirana = new KiranaModel();
                 newkirana.setName(kirana_name_add.getText().toString().toLowerCase().trim());
                 newkirana.setVendor_name(vendor_name_add.getText().toString().toLowerCase().trim());
                 newkirana.setAddress(address_add.getText().toString().toLowerCase().trim());
                 newkirana.setSize(size_add.getSelectedItem().toString().toLowerCase().trim());
-
+                newkirana.setCity(city_add.getText().toString().trim().toLowerCase());
+                newkirana.setImage_path(path.toString());
                 globalClass.AddKirana(newkirana);
 
                 Toast.makeText(AddKirana.this, "Hogaya!", Toast.LENGTH_SHORT).show();
-
             }
         });
+
         capture_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -142,6 +144,38 @@ public class AddKirana extends AppCompatActivity {
 
                 }
             });
+        }
+
+        public void verifyform(){
+            if(kirana_name_add.getText().toString().isEmpty()){
+                kirana_name_add.setError("Kirana Name is required");
+                kirana_name_add.requestFocus();
+                return;
+            }
+
+            if (vendor_name_add.getText().toString().isEmpty()){
+                vendor_name_add.setError("Vendor Name of the Kirana is required");
+                vendor_name_add.requestFocus();
+                return;
+            }
+
+            if(address_add.getText().toString().isEmpty()){
+                address_add.setError("Address of the Kirana is required");
+                address_add.requestFocus();
+                return;
+            }
+
+            if (size_add.getSelectedItem().toString().isEmpty()){
+                size_add.setPrompt("Select Size of the Shop");
+                size_add.requestFocus();
+                return;
+            }
+
+            if(city_add.getText().toString().isEmpty()){
+                city_add.setError("Enter the City");
+                city_add.requestFocus();
+                return;
+            }
         }
 }
 

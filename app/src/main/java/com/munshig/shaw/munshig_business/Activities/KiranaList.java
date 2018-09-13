@@ -80,8 +80,10 @@ public class KiranaList extends AppCompatActivity {
 
         GlobalClass globalClass = (GlobalClass) getApplicationContext();
 
-        Log.i( "Inuinu: ", String.valueOf(globalClass.getList_kirana().size()));
-        kiranas = globalClass.getList_kirana();
+        Log.i( "Inuinu: ", String.valueOf(globalClass.getKiranaList().size()));
+        Log.i("onCreate:KiranaList ", String.valueOf(globalClass.getKiranaList().size()));
+
+        kiranas = globalClass.getKiranaList();
         mAdapter = new KiranalistAdapter(kiranas, KiranaList.this);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -97,5 +99,7 @@ public class KiranaList extends AppCompatActivity {
         }
         mAdapter.filterList(filteredlist);
     }
+
+
 
 }

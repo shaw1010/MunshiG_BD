@@ -46,8 +46,6 @@ public class KiranalistAdapter extends RecyclerView.Adapter<KiranalistAdapter.My
             @Override
             public void onClick(View view) {
 
-
-
                 Intent intent = new Intent(context, KiranaDetails.class);
                 intent.putExtra("name", kirana.getName());
                 intent.putExtra("vendor_name", kirana.getVendor_name());

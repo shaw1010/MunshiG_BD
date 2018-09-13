@@ -171,11 +171,12 @@ public class AuthActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
+                            GlobalClass globalClass = (GlobalClass) getApplicationContext();
+                            globalClass.setPhonenumber(phoneNumber);
                             Intent intent = new Intent(AuthActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
 
-                            // ...
                         } else {
                             // Sign in failed, display a message and update the UI
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
