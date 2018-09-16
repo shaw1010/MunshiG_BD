@@ -1,6 +1,4 @@
-package com.munshig.shaw.munshig_business.Models;
-
-import android.net.Uri;
+package com.munshig.shaw.munshig_business.AppUtilities.Models;
 
 import java.util.List;
 

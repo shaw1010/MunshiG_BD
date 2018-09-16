@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.munshig.shaw.munshig_business.Global.GlobalClass;
-import com.munshig.shaw.munshig_business.Models.KiranaModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Global.GlobalClass;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.KiranaModel;
 
 import java.util.List;
 
@@ -38,14 +38,15 @@ public class MyTask1 extends AsyncTask<Void, Void, List<KiranaModel>> {
 
         synchronized (this) {
 
-            if (globalClass.getUserMehboob() == null) {
+            if (globalClass.getUserMehboob() == null && globalClass.getBarcodeList().isEmpty() && globalClass.getCoMehboobList().isEmpty() && globalClass.getKiranaList().isEmpty()) {
                 globalClass.ReadProfileData(phonenumber, kirana_button, profile_button, alert);
                 globalClass.getUserMehboob();
                 publishProgress();
-
+                globalClass.ReadAllMehboobsData();
             }
-            globalClass.ReadAllMehboobsData();
+
             globalClass.ReadAllBarcode(kirana_button, profile_button, progressBar);
+
         }
 
         return globalClass.getKiranaList();

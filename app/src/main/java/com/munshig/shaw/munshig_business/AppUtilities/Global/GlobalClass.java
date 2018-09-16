@@ -1,4 +1,4 @@
-package com.munshig.shaw.munshig_business.Global;
+package com.munshig.shaw.munshig_business.AppUtilities.Global;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
@@ -16,26 +16,19 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.munshig.shaw.munshig_business.Models.BarcodeModel;
-import com.munshig.shaw.munshig_business.Models.KiranaModel;
-import com.munshig.shaw.munshig_business.Models.MehboobModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.BarcodeModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.KiranaModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.MehboobModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.SpeechModel;
 
-import java.lang.reflect.Array;
-import java.security.Timestamp;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class GlobalClass extends Application {
 
@@ -49,6 +42,9 @@ public class GlobalClass extends Application {
         List<MehboobModel> CoMehboobList = new ArrayList<>();   //List of other Mehboobs working in the same Kirana Store, contains only Name and Contact Info
         BarcodeModel SearchBarcode;     //The details of the barcode that already exists in the database which has been reentered
         List<BarcodeModel> BarcodeList = new ArrayList<>();
+        List<SpeechModel> SpeechList = new ArrayList<>();
+        SpeechModel speechModel;
+        String patternBD;
 
 
 //------Constructors------------------------------------------------------------------------------//
@@ -141,8 +137,23 @@ public class GlobalClass extends Application {
         SearchBarcode = searchBarcode;
     }
 
+    public List<SpeechModel> getSpeechList() {
+        return SpeechList;
+    }
 
-//------------------------------------------------------------------------------------------------//
+    public void setSpeechList(List<SpeechModel> speechList) {
+        SpeechList = speechList;
+    }
+
+    public SpeechModel getSpeechModel() {
+        return speechModel;
+    }
+
+    public void setSpeechModel(SpeechModel speechModel) {
+        this.speechModel = speechModel;
+    }
+
+    //------------------------------------------------------------------------------------------------//
 
 
     //GLOBALCLASS FUNCTIONS:
@@ -162,13 +173,14 @@ public class GlobalClass extends Application {
     public MehboobModel ReadProfileData(String mobile_no, final Button kirana_button, final Button profile_button, final TextView alert){
 
         fire = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .build();
-        fire.setFirestoreSettings(settings);
+//        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+//                .setPersistenceEnabled(true)
+//                .build();
+//        fire.setFirestoreSettings(settings);
 
 
         Log.i("ReadProfileData:", "getMehboob");
+
 
 
         fire.collection("Mehboobs").whereEqualTo("mobile_no", mobile_no).addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -300,10 +312,10 @@ public class GlobalClass extends Application {
         Log.i( "Reading CoMehboobData: ", "Co_mehboob Data");
 
         //Initializing FirebaseFirestore variables: getting Instance and Enable Offline Data
-        lite = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.
-                Builder().setPersistenceEnabled(true).build();
-        lite.setFirestoreSettings(settings);
+//        lite = FirebaseFirestore.getInstance();
+//        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.
+//                Builder().setPersistenceEnabled(true).build();
+//        lite.setFirestoreSettings(settings);
 
 
         /*Query for fetching Co-Mehbooblist by accessing the mehboob_name in the Barcodes collection
@@ -323,10 +335,11 @@ public class GlobalClass extends Application {
                         case ADDED:
                             CoMehboobList.add(doc.getDocument().toObject(MehboobModel.class));
                             Log.i( "onEvent:ReadAllMehboobsData", "ADDED");
+                            PatternBD();
                             break;
                         case REMOVED:
                             CoMehboobList.remove(doc.getDocument().toObject(MehboobModel.class));
-
+                            PatternBD();
                             break;
                         case MODIFIED:
                             for(int i=0; i<CoMehboobList.size();i++) {
@@ -334,6 +347,7 @@ public class GlobalClass extends Application {
                                     CoMehboobList.set(i, doc.getDocument().toObject(MehboobModel.class));
                                 }
                             }
+                            PatternBD();
                             Log.i( "onEvent:ReadAllMehboobsData", "MODIFIED");
                     }
                 }
@@ -367,10 +381,8 @@ public class GlobalClass extends Application {
                                 switch (doc.getType()){
                                     case REMOVED:
                                         BarcodeList.remove(doc.getDocument().toObject(BarcodeModel.class));
-                                        kirana_button.setEnabled(true);
-                                        profile_button.setEnabled(true);
                                         Log.i("onEvent:ReadAllBarcode" , "REMOVED");
-                                        progressBar.setVisibility(View.GONE);
+//                                        ReadAllSpeechItems(kirana_button, profile_button, progressBar);
                                         break;
                                     case ADDED:
                                         barcodeModel.setName(doc.getDocument().get("name").toString());
@@ -378,9 +390,6 @@ public class GlobalClass extends Application {
                                         barcodeModel.setPrice((ArrayList) doc.getDocument().get("price"));
                                         barcodeModel.setModified(false);
                                         BarcodeList.add(barcodeModel);
-                                        kirana_button.setEnabled(true);
-                                        profile_button.setEnabled(true);
-                                        progressBar.setVisibility(View.GONE);
                                         Log.i("onEvent:ReadAllBarcode" , "ADDED");
                                         break;
                                     case MODIFIED:
@@ -389,10 +398,8 @@ public class GlobalClass extends Application {
                                         barcodeModel.setPrice((ArrayList) doc.getDocument().get("price"));
                                         barcodeModel.setModified(true);
                                         BarcodeList.add(barcodeModel);
-                                        kirana_button.setEnabled(true);
+//                                        ReadAllSpeechItems(kirana_button, profile_button, progressBar);
                                         Log.i("onEvent:ReadAllBarcode" , "MODIFIED");
-                                        profile_button.setEnabled(true);
-                                        progressBar.setVisibility(View.GONE);
                                         break;
                                 }
                             }
@@ -402,11 +409,63 @@ public class GlobalClass extends Application {
             }
         });
 
+        ReadAllSpeechItems(kirana_button, profile_button, progressBar);
         Log.i( "Searched Barcode: ", "Found an Existing Barcode");
         return SearchBarcode;
     }
 
 
+    /*A.6. This function fetches the data of all Speech entries and stores them in a list of
+    SpeechModel objects. * */
+
+    public List<SpeechModel> ReadAllSpeechItems(final Button kirana_button, final Button profile_button, final ProgressBar progressBar){
+        SpeechList.clear();
+        fire.collection("GlobalData").document("SpeechItems").collection("SpeechInventory").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot documentSnapshots, FirebaseFirestoreException e) {
+                if(e!=null){
+                    Toast.makeText(GlobalClass.this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
+                for(DocumentChange doc : documentSnapshots.getDocumentChanges()){
+                    switch (doc.getType()){
+                        case ADDED:
+                            Log.i("onEvent:ReadAllSpeechItems" , "ADDED");
+                            Log.i("onEvent:ReadAllSpeechItems" , doc.getDocument().getString("speechName"));
+                            SpeechList.add(doc.getDocument().toObject(SpeechModel.class));
+                            break;
+                        case MODIFIED:
+                            Log.i("onEvent:ReadAllSpeechItems" , "MODIFIED");
+                            SpeechList.add(doc.getDocument().toObject(SpeechModel.class));
+                            break;
+                        case REMOVED:
+                            Log.i("onEvent:ReadAllSpeechItems" , "REMOVED");
+                            SpeechList.remove(doc.getDocument().toObject(SpeechModel.class));
+                            break;
+                    }
+                }
+                kirana_button.setEnabled(true);
+                profile_button.setEnabled(true);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+        return SpeechList;
+    }
+
+
+    public void PatternBD(){
+        fire.collection("BD").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for( DocumentSnapshot doc : task.getResult()){
+                        patternBD = doc.getData().get("String").toString().trim();
+                        Log.i( "onComplete: ", patternBD);
+                    }
+
+                }
+            }
+        });
+    }
 
 //``B. Adding Data to Firebase Firestore from AddBarcode and AddKirana Activity
 
@@ -453,6 +512,12 @@ public class GlobalClass extends Application {
         });
     }
 
+
+    //B.3. Adding new Speech Items to Firebase Firestore
+    public void AddSpeechItem(SpeechModel speechModel){
+
+
+    }
 }
 
 

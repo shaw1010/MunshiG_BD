@@ -23,8 +23,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.munshig.shaw.munshig_business.Global.GlobalClass;
-import com.munshig.shaw.munshig_business.Models.KiranaModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Global.GlobalClass;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.KiranaModel;
 import com.munshig.shaw.munshig_business.R;
 
 public class AddKirana extends AppCompatActivity {

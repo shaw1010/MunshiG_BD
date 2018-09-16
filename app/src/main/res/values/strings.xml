@@ -7,4 +7,5 @@
         <item>Medium</item>
         <item>Large</item>
     </string-array>
+    <string name="title_activity_speech_list">SpeechList</string>
 </resources>

@@ -22,9 +22,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.munshig.shaw.munshig_business.Global.GlobalClass;
+import com.munshig.shaw.munshig_business.AppUtilities.Global.GlobalClass;
 import com.munshig.shaw.munshig_business.R;
-import com.munshig.shaw.munshig_business.SaveSharedPreference;
+import com.munshig.shaw.munshig_business.AppUtilities.SaveSharedPreference;
 
 import java.util.concurrent.TimeUnit;
 

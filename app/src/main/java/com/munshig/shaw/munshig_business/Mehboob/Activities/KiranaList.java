@@ -3,10 +3,10 @@ package com.munshig.shaw.munshig_business.Mehboob.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.munshig.shaw.munshig_business.Mehboob.Adapters.KiranalistAdapter;
-import com.munshig.shaw.munshig_business.Global.GlobalClass;
-import com.munshig.shaw.munshig_business.Models.KiranaModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Global.GlobalClass;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.KiranaModel;
 import com.munshig.shaw.munshig_business.R;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class KiranaList extends AppCompatActivity {
     List<KiranaModel> kiranas;
     private RecyclerView.LayoutManager mLayoutManager;
     EditText search_edit;
+    SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,12 @@ public class KiranaList extends AppCompatActivity {
         search_edit = findViewById(R.id.search_edit);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        pullToRefresh = findViewById(R.id.pullToRefresh);
         mRecyclerView.hasFixedSize();
+
+
+        final GlobalClass globalClass = (GlobalClass) getApplicationContext();
+
 
 
         //Listeners
@@ -70,7 +76,19 @@ public class KiranaList extends AppCompatActivity {
             }
         });
 
-        GlobalClass globalClass = (GlobalClass) getApplicationContext();
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mRecyclerView.setEnabled(false);
+                globalClass.ReadKiranaList(globalClass.getUserMehboob().getKirana_progress());
+                KiranalistAdapter adapter = new KiranalistAdapter(globalClass.getKiranaList(), KiranaList.this);
+                mRecyclerView.setAdapter(adapter);
+            }
+        });
+
+
+
+
 
         Log.i( "Inuinu: ", String.valueOf(globalClass.getKiranaList().size()));
         Log.i("onCreate:KiranaList ", String.valueOf(globalClass.getKiranaList().size()));

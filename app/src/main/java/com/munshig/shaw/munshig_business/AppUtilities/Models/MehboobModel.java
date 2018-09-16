@@ -1,6 +1,5 @@
-package com.munshig.shaw.munshig_business.Models;
+package com.munshig.shaw.munshig_business.AppUtilities.Models;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 public class MehboobModel{

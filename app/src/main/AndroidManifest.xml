@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.munshig.shaw.munshig_business">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
+        android:name=".AppUtilities.Global.GlobalClass"
         android:allowBackup="true"
-        android:name=".Global.GlobalClass"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -32,6 +34,14 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".Mehboob.Activities.SpeechList"
+            android:label="@string/title_activity_speech_list"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Mehboob.Activities.SpeechCards" />
+        <activity android:name=".BDTeam.Activities.KiranaBD" />
+        <activity android:name=".BDTeam.Activities.MehboobBD"></activity>
     </application>
 
 </manifest>

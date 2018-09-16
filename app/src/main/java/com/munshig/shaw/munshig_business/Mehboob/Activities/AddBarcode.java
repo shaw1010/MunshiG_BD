@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,10 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.munshig.shaw.munshig_business.Global.GlobalClass;
-import com.munshig.shaw.munshig_business.Models.BarcodeModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Global.GlobalClass;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.BarcodeModel;
 import com.munshig.shaw.munshig_business.R;
 
 import java.util.ArrayList;

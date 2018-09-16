@@ -1,4 +1,4 @@
-package com.munshig.shaw.munshig_business.Models;
+package com.munshig.shaw.munshig_business.AppUtilities.Models;
 
 import java.util.List;
 

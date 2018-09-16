@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.munshig.shaw.munshig_business.Global.GlobalClass;
-import com.munshig.shaw.munshig_business.Models.MehboobModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Global.GlobalClass;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.MehboobModel;
 import com.munshig.shaw.munshig_business.R;
 
 public class Profile extends AppCompatActivity {

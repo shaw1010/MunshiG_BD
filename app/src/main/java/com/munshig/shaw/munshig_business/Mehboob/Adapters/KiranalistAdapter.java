@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.munshig.shaw.munshig_business.Mehboob.Activities.KiranaDetails;
-import com.munshig.shaw.munshig_business.Global.GlobalClass;
-import com.munshig.shaw.munshig_business.Models.KiranaModel;
+import com.munshig.shaw.munshig_business.AppUtilities.Global.GlobalClass;
+import com.munshig.shaw.munshig_business.AppUtilities.Models.KiranaModel;
 import com.munshig.shaw.munshig_business.R;
 
 import java.util.List;
